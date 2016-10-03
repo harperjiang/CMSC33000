@@ -11,9 +11,6 @@
 #
 import sys
 
-global counter
-counter = 0
-
 def main(dict):
     numLines = 0
     numChars = 0
@@ -26,6 +23,6 @@ def main(dict):
             for line in lines:
                 numLines += 1
                 numChars += len(line)
-            console.log(numLines)
-            console.log(numChars)
+            print(numLines)
+            print(numChars)
     return {'numChars':numChars, 'numLines':numLines}
