@@ -10,15 +10,25 @@
 #
 #
 import sys
+import string
 
 def main(dict):
     numLines = 0
     numChars = 0
-    
-    fname = dict['name']
-    content = dict['content']
-    lines = content.split('\n')
-    for line in lines:
-        numLines += 1
-        numChars += len(line)
-    return {'_id':fname + "_count", 'numChars':numChars, 'numLines':numLines}
+    if 'files' in dict:
+        id = dict['_id']
+        files = dict['files']
+        for file in files:
+            fname = file['name']
+            content = file['content']
+            lines = content.split('\n')
+            for line in lines:
+                numLines += 1
+                numChars += len(line)
+        docData = {}
+        docData['_id'] = id+"_count"
+        docData['numChar'] = numChars
+        docData['numLine'] = numLines
+        return {'doc':docData}
+    else:
+        return {}

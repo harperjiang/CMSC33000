@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * Generate JSON input for the OpenWhisk action
@@ -16,11 +17,15 @@ public class FileGen {
 	public static void main(String[] args) throws Exception {
 		genFile(10);
 		genFile(100);
-		genFile(200);
-		genFile(300);
-		genFile(500);
-		genFile(1000);
-		genFile(2000);
+		genFile(110);
+		genFile(120);
+		genFile(130);
+		genFile(140);
+		genFile(150);
+		genFile(160);
+		genFile(170);
+		genFile(180);
+		genFile(190);
 	}
 
 	protected static void genFile(int n) throws Exception {
@@ -29,7 +34,7 @@ public class FileGen {
 		PrintWriter pw = new PrintWriter(new FileOutputStream(
 				MessageFormat.format("data/{0}", String.valueOf(n))));
 
-		pw.println("{\"files\":[");
+		pw.println(MessageFormat.format("'{'\"_id\":\"{0}\",\"files\":[",UUID.randomUUID().toString()));
 
 		for (int i = 0; i < n; i++) {
 			// Determine num of chars

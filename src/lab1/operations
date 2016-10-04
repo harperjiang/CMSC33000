@@ -1,0 +1,4 @@
+wsk trigger create fileAddTrigger --feed /"UChicago CMSC 330_dev"/Bluemix_Cloudant_Credentials-1/changes --param dbname default --param includeDoc true
+
+wsk rule create fileMonitorRule fileAddTrigger charCount
+
