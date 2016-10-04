@@ -14,15 +14,11 @@ import sys
 def main(dict):
     numLines = 0
     numChars = 0
-    if 'files' in dict:
-        files = dict['files']
-        for f in files:
-            fname = f['name']
-            content = f['content']
-            lines = content.split('\n')
-            for line in lines:
-                numLines += 1
-                numChars += len(line)
-            print(numLines)
-            print(numChars)
-    return {'numChars':numChars, 'numLines':numLines}
+    
+    fname = dict['name']
+    content = dict['content']
+    lines = content.split('\n')
+    for line in lines:
+        numLines += 1
+        numChars += len(line)
+    return {'_id':fname + "_count", 'numChars':numChars, 'numLines':numLines}
