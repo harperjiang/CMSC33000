@@ -8,18 +8,21 @@ def main(argv):
   try:
     while line:
       line = line.rstrip()
-      key = line.split()(0)
+      key = line.split()[0]
       
       if key == currentkey:
           count += 1
       else:
-          print(currentkey + '\t' + count)
+          if currentkey != '':
+              print(currentkey + '\t' + str(count))
                 
           currentkey = key
           count = 1
       line = sys.stdin.readline()
+    
+    print(currentkey + '\t' + str(count))
   except "end of file":
-    return None
+    print(currentkey + '\t' + str(count))
 
 if __name__ == "__main__":
   main(sys.argv)

@@ -7,7 +7,7 @@ def main(argv):
     while line:
       line = line.rstrip()
       kv = line.split()
-      print "" + kv(0) + "\t" + "1"
+      print "" + kv[0] + "\t" + "1"
       line = sys.stdin.readline()
   except "end of file":
     return None
