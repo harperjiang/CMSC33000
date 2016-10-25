@@ -31,6 +31,7 @@ object AWSLogAnalysis {
     var printFormat = new SimpleDateFormat("HH")
     azs.foreach(az => {
       var outfile = new PrintWriter(new FileOutputStream("result-%s".format(az)))
+      outfile.println("time\tprice\twait\tlast")
       for (i <- 0 to 23) {
         var time = new Date(starttime.getTime + i * HOUR)
 
@@ -45,6 +46,29 @@ object AWSLogAnalysis {
       }
       outfile close
     })
+
+    var outfile = new PrintWriter(new FileOutputStream("result-dynsimu"))
+    outfile.println("time\tprice\twait\tlast")
+    for (i <- 0 to 23) {
+      var time = new Date(starttime.getTime + i * HOUR)
+
+      prices.foreach(price => {
+        var simus = new ArrayBuffer[(Long, Long)]();
+        azs.foreach(az => {
+          simus += simulate(time, price, az)
+        })
+
+        // Look for the best region
+        var simu = simus.maxBy(f => f._2 -> f._1)
+
+        outfile println ("%s\t%.3f\t%.2f\t%.2f"
+          .format(printFormat.format(time),
+            price,
+            simu._1.toDouble / HOUR,
+            simu._2.toDouble / HOUR))
+      })
+    }
+    outfile close
   }
   /**
    * Simulate running of a spot instance at the given time and price
@@ -80,8 +104,6 @@ object AWSLogAnalysis {
       if (wait > HOUR) {
         return (HOUR, 0)
       }
-      startTime = data(index).timestamp;
-      wait = startTime.getTime - date.getTime
     }
 
     while (price <= bidprice && last <= DAY) {
@@ -92,7 +114,7 @@ object AWSLogAnalysis {
     if (last > DAY) {
       last = DAY
     } else {
-      
+
     }
     return (wait, last)
   }
